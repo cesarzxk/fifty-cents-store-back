@@ -1,9 +1,10 @@
 import { Router, Request, Response } from "express";
 import { setOrder, getOrderById, getOrdersByClientId } from "../database/order";
-import {v4, v1} from 'uuid';
+import {v4} from 'uuid';
 
 const orderRouter = Router();
 
+/*
 type itemType = {
     productId:number,
     locale: string,
@@ -18,6 +19,7 @@ type orderType = {
     data:Date,
 }
 
+*/
 orderRouter.post('/', (request:Request, response:Response)=>{
     if (request.body.items && request.body.clientId){
         setOrder(response,{
@@ -36,11 +38,14 @@ orderRouter.post('/', (request:Request, response:Response)=>{
 
 orderRouter.get('/', (request:Request, response:Response)=>{
 
-    if (request.body.clientId){
-        getOrdersByClientId(response, request.body.clientId);
+    if (request.query.clientId){
+        getOrdersByClientId(response, request.query.clientId.toString());
     }
-    else{
-        getOrderById(response, request.body.id);
+    else{if(request.query.id){
+            getOrderById(response, request.query.id.toString());
+        }else{
+            response.status(404).end();
+        }
     }
 })
 
