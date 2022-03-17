@@ -25,7 +25,7 @@ const itemSchema = new Schema({
 })
 
 const orderSchema = new Mongoose.Schema({
-    _id:{type:String, unique:true}, 
+    _id:String, 
     items: [itemSchema],
     clientId:Number,
     data:String,
@@ -45,9 +45,9 @@ async function main(){
 
 //order functions-----------------------------------------------------------------------------------------------------------
 
-export function getOrderById(res:Response, id:string){
+export async function getOrderById(res:Response, id:string){
     main()
-    const foundOrder = order.findById(id).catch(
+    const foundOrder = await order.findById(id).catch(
         (error)=>{
         if(error.code == 11000){
             res.status(409).json(error.keyValue).end();
@@ -55,14 +55,14 @@ export function getOrderById(res:Response, id:string){
             res.status(500).end();
         }
     });
-
-    res.status(409).json(foundOrder).end();
+    console.log(foundOrder)
+    res.status(200).json(foundOrder).end();
 }
 
 
-export function getOrdersByClientId(res:Response, clientId:string){
+export async function getOrdersByClientId(res:Response, clientId:string){
     main()
-    const foundOrders = order.find({clientId:clientId}).catch(
+    const foundOrders = await order.find({clientId:clientId}).catch(
         (error)=>{
         if(error.code == 11000){
             res.status(409).json(error.keyValue).end();
@@ -71,7 +71,7 @@ export function getOrdersByClientId(res:Response, clientId:string){
         }
     });
 
-    res.status(409).json(foundOrders).end();
+    res.status(200).json(foundOrders).end();
 }
 
 
