@@ -13,8 +13,22 @@ interface accountType {
     email:string,
     createDate: Date,
     }
+
+
+const accountSchema = new Mongoose.Schema({ 
+    _id:String,
+    password:String,
+    name:String,
+    lastname:String,
+    email:{type:String, unique:true},
+    createDate: Date,
+
+}, { collection: 'accounts' });
+
+const account = Mongoose.model('accountCreate', accountSchema);
+
     
-//db main -----------------------------------------------------------------------------------------------------------------
+
 async function main(){
     process.env.SERVER && 
         await Mongoose.connect(process.env.SERVER);
@@ -30,21 +44,6 @@ function GenerateToken(_id:string){
     return token;
 }
 
-
-//Users Schemas from mongoose--------------------------------------------------------------------------------------------
-
-
-const accountSchema = new Mongoose.Schema({ 
-    _id:String,
-    password:String,
-    name:String,
-    lastname:String,
-    email:{type:String, unique:true},
-    createDate: Date,
-
-}, { collection: 'accounts' });
-
-const account = Mongoose.model('accountCreate', accountSchema);
 
 //set anny acconunt type------------------------------------------------------------------------------------------
 
