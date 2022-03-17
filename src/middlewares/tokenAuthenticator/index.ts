@@ -6,8 +6,6 @@ interface requestAuth extends Request{
     _id?:string
 }
 
-
-
 export async function tokenAuthenticator(req:requestAuth, res:Response, next:NextFunction){
     const token = req.headers.authorization?.split(' ');
 

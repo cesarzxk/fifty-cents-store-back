@@ -1,5 +1,4 @@
 import http from 'http';
-
 import {NextFunction, Response, Request} from 'express';
 
 
@@ -25,6 +24,7 @@ export async function getItem(res:Response, locale:string , id?:string){
         })
 
         result.on('end',()=>{
+            
             res.status(200).json(JSON.parse(data)).end()
         })
     });

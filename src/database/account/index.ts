@@ -7,7 +7,6 @@ import bcrypt from 'bcrypt';
 
 interface accountType {
     _id:string,
-    username:string,
     password:string,
     name:string,
     lastname:string,
