@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import {setAccount} from "../database/account";
+import setAccount from "../database/account/setAccount";
 import {v1} from 'uuid';
 
 const registerRouter = Router();

@@ -1,6 +1,9 @@
 import { Router, Request, Response } from "express";
-import { setOrder, getOrderById, getOrdersByClientId } from "../database/order";
 import {v4} from 'uuid';
+
+import getOrderById from "../database/order/getOrderById";
+import getOrdersByClientId from "../database/order/getOrdersByClientId";
+import setOrder from "../database/order/setOrder";
 
 const orderRouter = Router();
 

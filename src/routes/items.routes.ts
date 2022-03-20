@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import {getItem} from "../database/item";
+import {getItem} from "../api/getItems";
 import {tokenAuthenticator} from "../middlewares/tokenAuthenticator";
 
 const itemsRouter = Router();
