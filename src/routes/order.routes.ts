@@ -4,31 +4,43 @@ import {v4} from 'uuid';
 import getOrderById from "../database/order/getOrderById";
 import getOrdersByClientId from "../database/order/getOrdersByClientId";
 import setOrder from "../database/order/setOrder";
+import { tokenAuthenticator } from "../middlewares/tokenAuthenticator";
 
 const orderRouter = Router();
 
-/*
+
 type itemType = {
     productId:number,
     locale: string,
     price: number,
-    quantity:number
+    quantity:number,
+    name:string
 }
 
-type orderType = {
-    _id: {type:String, unique:true},
-    items: itemType[],
-    clientId:Number,
-    data:Date,
-}
-
-*/
-orderRouter.post('/', (request:Request, response:Response)=>{
+orderRouter.post('/', tokenAuthenticator, (request:Request, response:Response)=>{
+    console.log(request.body)
     if (request.body.items && request.body.clientId){
+        const itensChecked = request.body.items.map(
+            (item:itemType)=> {
+                if(
+                    item.productId==undefined ||
+                    item.locale==undefined ||
+                    item.price==undefined ||
+                    item.quantity==undefined||
+                    item.name==undefined
+                    ){
+                        response.status(412).send('Erro no pedido!').end()
+                    }else{
+                        return item;
+                    }
+                }
+            )
+        console.log(request.body.total)
         setOrder(response,{
             _id:v4(),
-            items:request.body.items,
+            items:itensChecked,
             clientId:request.body.clientId,
+            total:request.body.total,
             data:new Date()
         });
     }
@@ -39,7 +51,7 @@ orderRouter.post('/', (request:Request, response:Response)=>{
 
 
 
-orderRouter.get('/', (request:Request, response:Response)=>{
+orderRouter.get('/', tokenAuthenticator, (request:Request, response:Response)=>{
 
     if (request.query.clientId){
         getOrdersByClientId(response, request.query.clientId.toString());

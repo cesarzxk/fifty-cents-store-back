@@ -6,7 +6,8 @@ type itemType = {
     productId:number,
     locale: string,
     price: number,
-    quantity:number
+    quantity:number,
+    name: string
 }
 
 type orderType = {
@@ -14,19 +15,22 @@ type orderType = {
     items: itemType[],
     clientId:Number,
     data:Date,
+    total:number
 }
 
 function setOrder(res:Response, newOrder:orderType){
     main();
+
     orderModel.create(newOrder).catch((error)=>{
         if(error.code == 11000){
-            res.status(409).json(error.keyValue).end();
+            return res.status(409).json(error.keyValue).end();
         }else{
-            res.status(500).end();
+            console.log(error)
+            return res.status(500).end();
         }
 
     }).then(()=>{
-        res.status(200).end()
+        return res.status(200).end();
     })
 }
 

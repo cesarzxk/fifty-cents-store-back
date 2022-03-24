@@ -7,13 +7,13 @@ export async function getOrderById(res:Response, id:string){
     const foundOrder = await orderModel.findById(id).catch(
         (error)=>{
         if(error.code == 11000){
-            res.status(409).json(error.keyValue).end();
+            return res.status(409).json(error.keyValue).end();
         }else{
-            res.status(500).end();
+            return res.status(500).end();
         }
     });
     console.log(foundOrder)
-    res.status(200).json(foundOrder).end();
+    return res.status(200).json(foundOrder).end();
 }
 
 export default getOrderById;

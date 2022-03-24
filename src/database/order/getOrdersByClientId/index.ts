@@ -7,13 +7,13 @@ async function getOrdersByClientId(res:Response, clientId:string){
     const foundOrders = await orderModel.find({clientId:clientId}).catch(
         (error)=>{
         if(error.code == 11000){
-            res.status(409).json(error.keyValue).end();
+            return res.status(409).json(error.keyValue).end();
         }else{
-            res.status(500).end();
+            return res.status(500).end();
         }
     });
 
-    res.status(200).json(foundOrders).end();
+    return res.status(200).json(foundOrders).end();
 }
 
 
