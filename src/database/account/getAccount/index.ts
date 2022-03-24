@@ -5,26 +5,27 @@ import accountModel from "../../../models/account";
 import generateToken from "../../../services/generateToken";
 import main from "../..";
 
-async function getAccount(res:Response, username:string, password:string){
+async function getAccount(res:Response, email:string, password:string){
     try{
         await main();
-        const user = (await accountModel.findOne({username:username}))
+        const user = (await accountModel.findOne({email:email}))
         bcrypt.compare(password, user.password, (err, result)=>{
             if(result){
         
-                res.status(200).json(
+                return res.status(200).json(
                     {
+                        id:user._id,
                         name:user.name,
                         lastname:user.lastname,
-                        email:user.idGoogle,
-                        token:generateToken(user._id)
+                        email:user.email,
+                        token:generateToken(user._id),
                     }).end()
             }else{
-                res.status(401).end()
+                return res.status(401).end()
             }
             });    
     }catch{
-        res.status(401).end()
+        return res.status(401).end()
     }
 }
 

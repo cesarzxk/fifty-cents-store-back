@@ -22,7 +22,7 @@ registerRouter.post('/',  (request:Request, response:Response)=>{
                 createDate: new Date(),
             }, response)
         :
-            response.status(409).json({'error':erros}).end()
+            response.status(412).json({'error':erros}).end()
 
 })
 

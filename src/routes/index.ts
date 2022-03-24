@@ -10,6 +10,6 @@ export const routes = Router();
 
 routes.use('/items', itemsRouter)
 routes.use('/register', registerRouter)
-routes.use('/user', authenticateRouter)
+routes.use('/authenticate', authenticateRouter)
 routes.use('/order', createOrderRouter)
 

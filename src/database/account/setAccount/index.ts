@@ -23,20 +23,23 @@ async function setAccount(user:accountType, res:Response){
                 _id:user._id,
                 password:hash,
                 name:user.name,
-                lastName:user.lastname,
+                lastname:user.lastname,
                 email:user.email,
                 createDate: user.createDate,
                 
             }
             accountModel.create(newUser).catch((error)=>{
                 if(error.code == 11000){
-                    res.status(409).json(error.keyValue).end();
+                    return res.status(409).json(error.keyValue).end();
                 }else{
-                    res.status(500).end();
+                    return res.status(500).end();
                 }
 
             }).then(()=>{
-                res.status(200).json({token:generateToken(user._id)}).end()
+                return res.status(200).json({
+                    token:generateToken(user._id),
+                    id:user._id
+                }).end()
             })
         })
     })
