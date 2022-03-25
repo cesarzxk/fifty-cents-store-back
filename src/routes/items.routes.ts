@@ -1,23 +1,23 @@
 import { Router, Request, Response } from "express";
-import getItem from "../api/getItems";
+import getItems from "../api/getItems";
 
 const itemsRouter = Router();
 
 
 itemsRouter.get('/', (request:Request, response:Response)=>{
     if (request.query.locale && request.query.id){
-        getItem(
+        getItems(
             response, 
             request.query.locale as string, 
             undefined,
             undefined,
             request.query.id as string,
-            request.query.search as string
+            undefined
             )
     }
     else{
         if(request.query.locale){
-            getItem(
+            getItems(
                 response, 
                 request.query.locale as string, 
                 request.query.material as string[], 

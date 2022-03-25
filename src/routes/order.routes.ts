@@ -18,7 +18,6 @@ type itemType = {
 }
 
 orderRouter.post('/', tokenAuthenticator, (request:Request, response:Response)=>{
-    console.log(request.body)
     if (request.body.items && request.body.clientId){
         const itensChecked = request.body.items.map(
             (item:itemType)=> {

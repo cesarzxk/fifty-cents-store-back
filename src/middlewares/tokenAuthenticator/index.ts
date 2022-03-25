@@ -1,15 +1,16 @@
 import {Request, Response, NextFunction} from 'express';
-require('dotenv').config()
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
 
 export async function tokenAuthenticator(req:Request, res:Response, next:NextFunction){
+    dotenv.config()
+
     const token = req.headers.authorization?.split(' ');
-    console.log(token)
-    if(token != undefined && token[0] == 'Bearer'){
+    if(token != undefined && token[0] == 'Bearer' && process.env.SECRET){
         jwt.verify(token[1], process.env.SECRET, (err)=>{
         
-            if (err) return res.status(401).json({ auth: false, message: 'Failed to authenticate token.' }).end();
+            if (err) return res.status(409).json({ auth: false, message: 'Failed to authenticate token.' }).end();
             next()
         })
     

@@ -1,10 +1,12 @@
+import 'dotenv/config'
 import express from 'express';
 import {routes} from './routes';
 import http from 'http';
-import bodyParcer from 'body-parser';
 
+import bodyParcer from 'body-parser';
 var queue = require('express-queue');
 const cors = require('cors')
+
 
 const app = express()
 const server = http.createServer(app);

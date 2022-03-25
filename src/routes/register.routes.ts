@@ -11,8 +11,12 @@ registerRouter.post('/',  (request:Request, response:Response)=>{
         request.body.name     ?? erros.push('name');
         request.body.lastname ?? erros.push('lastname');
 
-        (erros.length == 0)? 
-            
+        request.body.email==''    && erros.push('email');
+        request.body.password=='' && erros.push('password');
+        request.body.name==''     && erros.push('name');
+        request.body.lastname=='' && erros.push('lastname');
+
+        if(erros.length == 0){
             setAccount({
                 _id:v1(),
                 password:request.body.password.toString(),
@@ -21,8 +25,9 @@ registerRouter.post('/',  (request:Request, response:Response)=>{
                 email:request.body.email,
                 createDate: new Date(),
             }, response)
-        :
+        }else{
             response.status(412).json({'error':erros}).end()
+        }
 
 })
 
