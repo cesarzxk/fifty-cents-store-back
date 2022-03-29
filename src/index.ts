@@ -1,9 +1,9 @@
 import "dotenv/config";
 import express from "express";
 import { routes } from "./routes";
-import * as http from "http";
+import http from "http";
 
-import * as bodyParcer from "body-parser";
+import bodyParcer from "body-parser";
 var queue = require("express-queue");
 const cors = require("cors");
 
@@ -17,6 +17,6 @@ app.use(routes);
 
 export const rooms = () => {};
 
-server.listen(process.env.PORT ||3333, () => {
+server.listen(process.env.PORT || 3333, () => {
   console.log(`Servidor iniciado na porta ${process.env.PORT} ! 😁`);
 });
