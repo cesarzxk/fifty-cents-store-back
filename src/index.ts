@@ -1,24 +1,22 @@
-import 'dotenv/config'
-import express from 'express';
-import {routes} from './routes';
-import http from 'http';
+import "dotenv/config";
+import express from "express";
+import { routes } from "./routes";
+import * as http from "http";
 
-import bodyParcer from 'body-parser';
-var queue = require('express-queue');
-const cors = require('cors')
+import * as bodyParcer from "body-parser";
+var queue = require("express-queue");
+const cors = require("cors");
 
-
-const app = express()
+const app = express();
 const server = http.createServer(app);
-app.use(cors())
-app.use(bodyParcer.json())
+app.use(cors());
+app.use(bodyParcer.json());
 
-app.use(queue({ activeLimit: 2, queuedLimit: 2 }))
-app.use(routes)
+app.use(queue({ activeLimit: 2, queuedLimit: 2 }));
+app.use(routes);
 
-export const rooms = ()=>{}
+export const rooms = () => {};
 
-server.listen(3333, () =>{
-    console.log('Servidor iniciado! 😁')
-})
-
+server.listen(3333, () => {
+  console.log("Servidor iniciado! 😁");
+});

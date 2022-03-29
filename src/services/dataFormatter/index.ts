@@ -1,64 +1,97 @@
-type brazilian ={
-    nome: string,
-    descricao: string,
-    categoria: string,
-    imagem: string,
-    preco: string,
-    material: string,
-    departamento: string,
-    id: string
-}
+type brazilian = {
+  nome: string;
+  descricao: string;
+  categoria: string;
+  imagem: string;
+  preco: string;
+  material: string;
+  departamento: string;
+  id: string;
+};
 
-type european ={
-    hasDiscount: boolean,
-    name: string,
-    gallery: string[],
-    description: string,
-    price: string,
-    discountValue: string,
-    details: {
-        adjective: string,
-        material: string
-    },
-    id: string
-}
+type european = {
+  hasDiscount: boolean;
+  name: string;
+  gallery: string[];
+  description: string;
+  price: string;
+  discountValue: string;
+  details: {
+    adjective: string;
+    material: string;
+  };
+  id: string;
+};
 
-type itemType = european[] | brazilian[] | brazilian | european
+type itemType = european[] | brazilian[] | brazilian | european;
 
-function dataFormatter(items:itemType, locale:string){
-    let newItems;
+function dataFormatter(items: itemType, locale: string) {
+  let newItems;
 
-    if(Array.isArray(items)){
-        newItems = items.map((item:brazilian|european) => 
-            {  
-                return{
-                    hasDiscount:    locale == 'brazilian'? false:item.hasDiscount,
-                    name:           locale == 'brazilian'? item.nome:item.name,
-                    images:         locale == 'brazilian'? [item.imagem]:item.gallery,
-                    description:    locale == 'brazilian'? item.descricao:item.description,
-                    price:          locale == 'brazilian'? item.preco:item.price,
-                    discountValue:  locale == 'brazilian'? 0.0:item.discountValue,
-                    material:       locale == 'brazilian'? item.material:item.details.material,
-                    category:       locale == 'brazilian'? item.categoria:item.details.adjective,
-                    id:             item.id,
-                    locale:         locale
-                }
-            })
-    }else{
-        newItems = {
-            hasDiscount:    locale == 'brazilian'? false:items.hasDiscount,
-            name:           locale == 'brazilian'? items.nome:items.name,
-            images:         locale == 'brazilian'? [items.imagem]:items.gallery,
-            description:    locale == 'brazilian'? items.descricao:items.description,
-            price:          locale == 'brazilian'? items.preco:items.price,
-            discountValue:  locale == 'brazilian'? 0.0:items.discountValue,
-            material:       locale == 'brazilian'? items.material:items.details.material,
-            category:       locale == 'brazilian'? items.departamento:items.details.adjective,
-            id:             items.id,
-            locale:         locale
-        }
+  if (Array.isArray(items)) {
+    newItems = items.map((item: brazilian | european) => {
+      if (locale == "brazilian") {
+        const newitem = item as brazilian;
+        return {
+          hasDiscount: false,
+          name: newitem.nome,
+          images: [newitem.imagem],
+          description: newitem.descricao,
+          price: newitem.preco,
+          discountValue: 0.0,
+          material: newitem.material,
+          category: newitem.departamento,
+          id: newitem.id,
+          locale: locale,
+        };
+      } else {
+        const newitem = item as european;
+        return {
+          hasDiscount: newitem.hasDiscount,
+          name: newitem.name,
+          images: newitem.gallery,
+          description: newitem.description,
+          price: newitem.price,
+          discountValue: newitem.discountValue,
+          material: newitem.details.material,
+          category: newitem.details.adjective,
+          id: newitem.id,
+          locale: locale,
+        };
+      }
+    });
+  } else {
+    if (locale == "brazilian") {
+      const newitem = items as brazilian;
+      newItems = {
+        hasDiscount: false,
+        name: newitem.nome,
+        images: [newitem.imagem],
+        description: newitem.descricao,
+        price: newitem.preco,
+        discountValue: 0.0,
+        material: newitem.material,
+        category: newitem.departamento,
+        id: newitem.id,
+        locale: locale,
+      };
+    } else {
+      const newitem = items as european;
+      newItems = {
+        hasDiscount: newitem.hasDiscount,
+        name: newitem.name,
+        images: newitem.gallery,
+        description: newitem.description,
+        price: newitem.price,
+        discountValue: newitem.discountValue,
+        material: newitem.details.material,
+        category: newitem.details.adjective,
+        id: newitem.id,
+        locale: locale,
+      };
     }
-    return newItems;
+  }
+  return newItems;
 }
 
 export default dataFormatter;
