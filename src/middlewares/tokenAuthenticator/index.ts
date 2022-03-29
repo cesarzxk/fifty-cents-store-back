@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import * as jwt from "jsonwebtoken";
-import * as dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
 export async function tokenAuthenticator(
   req: Request,

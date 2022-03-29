@@ -1,5 +1,5 @@
 import { Response } from "express";
-import * as bcrypt from "bcrypt";
+import bcrypt from "bcrypt";
 
 import accountModel from "../../../models/account";
 import generateToken from "../../../services/generateToken";
@@ -7,9 +7,12 @@ import main from "../..";
 
 async function getAccount(res: Response, email: string, password: string) {
   try {
+    
     await main();
+    console.log(password)
     const user = await accountModel.findOne({ email: email });
     bcrypt.compare(password, user.password, (err, result) => {
+      
       if (result) {
         return res
           .status(200)
