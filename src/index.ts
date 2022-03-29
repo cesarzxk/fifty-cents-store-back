@@ -17,6 +17,6 @@ app.use(routes);
 
 export const rooms = () => {};
 
-server.listen(3333 || process.env.PORT, () => {
-  console.log("Servidor iniciado! 😁");
+server.listen(3000 || process.env.PORT, () => {
+  console.log(`Servidor iniciado na porta ${process.env.PORT} ! 😁`);
 });
