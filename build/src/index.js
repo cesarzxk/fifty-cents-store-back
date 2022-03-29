@@ -27,7 +27,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.rooms = void 0;
-require("dotenv/config");
+require('dotenv').config();
 var express_1 = __importDefault(require("express"));
 var routes_1 = require("./routes");
 var http = __importStar(require("http"));
@@ -42,6 +42,6 @@ app.use(queue({ activeLimit: 2, queuedLimit: 2 }));
 app.use(routes_1.routes);
 var rooms = function () { };
 exports.rooms = rooms;
-server.listen(3333 || process.env.PORT, function () {
+server.listen(3333, function () {
     console.log("Servidor iniciado! 😁");
 });
