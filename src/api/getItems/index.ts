@@ -1,4 +1,4 @@
-import * as http from "http";
+import http from "http";
 import { Response } from "express";
 import dataFormatter from "../../services/dataFormatter";
 import options from "../options/";

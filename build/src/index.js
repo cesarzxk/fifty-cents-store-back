@@ -42,6 +42,6 @@ app.use(queue({ activeLimit: 2, queuedLimit: 2 }));
 app.use(routes_1.routes);
 var rooms = function () { };
 exports.rooms = rooms;
-server.listen(3333 || process.env.PORT, function () {
-    console.log("Servidor iniciado! 😁");
+server.listen(process.env.PORT || 3333, function () {
+    console.log("Servidor iniciado na porta ".concat(process.env.PORT, " ! \uD83D\uDE01"));
 });
