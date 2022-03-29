@@ -5,11 +5,9 @@ import itemsRouter from "./items.routes";
 import authenticateRouter from "./authenticate.routes";
 import createOrderRouter from "./order.routes";
 
-
 export const routes = Router();
 
-routes.use('/items', itemsRouter)
-routes.use('/register', registerRouter)
-routes.use('/authenticate', authenticateRouter)
-routes.use('/order', createOrderRouter)
-
+routes.use("/items", itemsRouter);
+routes.use("/register", registerRouter);
+routes.use("/authenticate", authenticateRouter);
+routes.use("/order", createOrderRouter);
