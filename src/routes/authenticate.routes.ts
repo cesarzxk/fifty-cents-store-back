@@ -4,7 +4,6 @@ import getAccount from "../database/account/getAccount";
 const authenticateRouter = Router();
 
 authenticateRouter.post("/", (request: Request, response: Response) => {
-
   request.body.email && request.body.email != ""
     ? request.body.password && request.body.password != ""
       ? getAccount(response, request.body.email, request.body.password)
