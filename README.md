@@ -29,12 +29,12 @@
 </p>
 
 <p align="center">
-  <a href="#%EF%B8%8F-sobre-o-projeto">Sobre o projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-sobre-o-projeto">Sobre o projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-capturas-de-tela">Capturas de Tela</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-técnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-como-iniciar-?">Iniciar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-como-iniciar-">Iniciar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-estrutura-de-rotas">Estrutura de rotas</a>&nbsp;|&nbsp;
-  <a href="#-como-contribuir-?">Como contribuir</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-como-contribuir-">Como contribuir</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-licença">Licença</a>
 </p>
 
@@ -58,7 +58,7 @@ Imagens do aplicativo em operação via desktop.
 <img alt="ScreenShot03" src="https://res.cloudinary.com/da91uwz7j/image/upload/v1648654068/fifth-cent-back/Captura_de_tela_2022-03-30_122725_i0yvq1.png" width="400px">
 </p>
 
-## 🚀 Técnologias
+## 🚀 Tecnologias
 
 As seguintes tecnologias foram utilizadas para desenvolver esse projeto:
 
