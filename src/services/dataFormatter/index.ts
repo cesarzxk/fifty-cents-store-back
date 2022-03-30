@@ -40,7 +40,7 @@ function dataFormatter(items: itemType, locale: string) {
           price: newitem.preco,
           discountValue: 0.0,
           material: newitem.material,
-          category: newitem.departamento,
+          category: newitem.categoria,
           id: newitem.id,
           locale: locale,
         };
@@ -71,7 +71,7 @@ function dataFormatter(items: itemType, locale: string) {
         price: newitem.preco,
         discountValue: 0.0,
         material: newitem.material,
-        category: newitem.departamento,
+        category: newitem.categoria,
         id: newitem.id,
         locale: locale,
       };
