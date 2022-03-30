@@ -60,7 +60,7 @@ Imagens do aplicativo em operação via desktop.
 
 ## 🚀 Técnologias
 
-As seguintes tecnologias foram utilizadar para desenvolver esse projeto:
+As seguintes tecnologias foram utilizadas para desenvolver esse projeto:
 
 - [NodeJS](https://nodejs.org/en/)
 - [Express](https://expressjs.com/)
@@ -258,7 +258,7 @@ Return:
 
 ## 🤔 Como contribuir ?
 
-**Fazer um fork desse repositorio**
+**Fazer um fork desse repositório**
 
 ```bash
 # Fork via GitHub linha de comando
