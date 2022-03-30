@@ -104,10 +104,12 @@ SERVER=mongodb+srv://SEU-USUARIO:SUA-SENHA@cluster0.irqbj.mongodb.net/fiftyCents
 ```bash
 # Para instalar da dependências:
 $ yarn
-
+#ou
+$ npm install
 # Para iniciar o servidor:
 $ yarn dev
-
+#ou
+$ npm run dev
 ```
 
 ## 🛰 Estrutura de rotas
