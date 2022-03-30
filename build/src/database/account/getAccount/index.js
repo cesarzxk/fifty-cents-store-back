@@ -53,7 +53,6 @@ function getAccount(res, email, password) {
                     return [4 /*yield*/, (0, __1.default)()];
                 case 1:
                     _b.sent();
-                    console.log(password);
                     return [4 /*yield*/, account_1.default.findOne({ email: email })];
                 case 2:
                     user_1 = _b.sent();
