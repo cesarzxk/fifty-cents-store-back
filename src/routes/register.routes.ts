@@ -10,7 +10,6 @@ registerRouter.post("/", (request: Request, response: Response) => {
   request.body.password ?? erros.push("password");
   request.body.name ?? erros.push("name");
   request.body.lastname ?? erros.push("lastname");
-
   request.body.email == "" && erros.push("email");
   request.body.password == "" && erros.push("password");
   request.body.name == "" && erros.push("name");
