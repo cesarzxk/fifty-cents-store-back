@@ -4,11 +4,7 @@ import dataFormatter from "../../services/dataFormatter";
 import options from "../options/";
 import dataFilter from "../../services/dataFilter";
 import dataSearch from "../../services/dataSearch";
-
-type filtersType = {
-  category: string[];
-  material: string[];
-};
+import dataOrderly from "../../services/dataOrderly";
 
 type productType = {
   hasDiscount: boolean;
@@ -25,41 +21,65 @@ type productType = {
 
 export default async function getItems(
   res: Response,
-  locale: string,
+  locale: string[],
   material?: string[],
   category?: string[],
   id?: string,
-  search?: string
+  search?: string,
+  orderlyBy?: "smaller" | "bigger" | undefined
 ) {
-  http.get(options(locale, id), (result) => {
-    var data = "";
-    result.on("data", (chunk) => {
-      data += chunk;
-    });
+  let newData = [] as productType[];
+  for (let i = 0; i < locale.length; i++) {
+    const data = await getdata(locale[i], id);
+    if (id) {
+      newData = [data as productType];
+    } else {
+      newData = [...newData, ...(data as productType[])];
+    }
+  }
 
-    result.on("end", () => {
-      const newData = dataFormatter(JSON.parse(data), locale) as productType[];
+  if (orderlyBy) {
+    newData = dataOrderly({
+      isSmaller: orderlyBy == "smaller",
+      data: newData,
+      price: true,
+    }) as productType[];
+  }
 
-      if (material || category) {
-        return res
-          .status(200)
-          .json(dataFilter(newData, material, category, search))
-          .end();
-      } else {
-        if (search) {
-          const dataSearched = dataSearch(newData, search) as
-            | productType[]
-            | [];
+  if (material || category) {
+    return res
+      .status(200)
+      .json(dataFilter(newData, material, category, search))
+      .end();
+  } else {
+    if (search) {
+      const dataSearched = dataSearch(newData, search) as productType[] | [];
 
-          if (dataSearched.length === 0) {
-            console.log(dataSearched);
-            return res.status(401).end();
-          }
-          return res.status(200).json(dataSearched).end();
-        } else {
-          return res.status(200).json(newData).end();
-        }
+      if (dataSearched.length === 0) {
+        return res.status(401).end();
       }
+      return res.status(200).json(dataSearched).end();
+    } else {
+      return res.status(200).json(newData).end();
+    }
+  }
+}
+
+function getdata(locale: string, id: string | undefined) {
+  return new Promise((resolve, rejecte) => {
+    http.get(options(locale, id), async (result) => {
+      var data = "";
+      result.on("data", (chunk) => {
+        data += chunk;
+      });
+
+      result.on("end", () => {
+        resolve(dataFormatter(JSON.parse(data), locale) as productType[]);
+      });
+
+      result.on("error", (err) => {
+        rejecte(err);
+      });
     });
   });
 }
