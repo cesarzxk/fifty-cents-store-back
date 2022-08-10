@@ -14,7 +14,10 @@ type dataType = {
 function dataSearch(data: dataType | dataType[], keyword: string) {
   if (Array.isArray(data)) {
     let newData = data.filter((item) => {
-      if (item.name.search(keyword) != -1) {
+      const newkeyword = keyword.normalize('NFD').replace(/[\u0300-\u036f]/g, "").trim().toLowerCase()
+      const newName = item.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "").trim().toLowerCase()
+
+      if (newName.search(newkeyword) != -1) {
         return true;
       } else {
         return false;
@@ -22,7 +25,10 @@ function dataSearch(data: dataType | dataType[], keyword: string) {
     });
     return newData;
   } else {
-    if (data.name.search(keyword) != -1) {
+      const newkeyword = keyword.normalize('NFD').replace(/[\u0300-\u036f]/g, "").trim().toLowerCase()
+      const newName = data.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "").trim().toLowerCase()
+
+    if (newName.search(newkeyword) != -1) {
       return true;
     } else {
       return false;
