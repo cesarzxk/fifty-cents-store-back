@@ -20,5 +20,5 @@ app.use(routes_1.routes);
 var rooms = function () { };
 exports.rooms = rooms;
 server.listen(process.env.PORT || 3333, function () {
-    console.log("Servidor iniciado na porta ".concat(process.env.PORT, " ! \uD83D\uDE01"));
+    console.log("Servidor iniciado na porta ".concat(process.env.PORT || 3333, " ! \uD83D\uDE01"));
 });

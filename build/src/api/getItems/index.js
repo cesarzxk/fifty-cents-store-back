@@ -35,6 +35,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -44,39 +53,81 @@ var dataFormatter_1 = __importDefault(require("../../services/dataFormatter"));
 var options_1 = __importDefault(require("../options/"));
 var dataFilter_1 = __importDefault(require("../../services/dataFilter"));
 var dataSearch_1 = __importDefault(require("../../services/dataSearch"));
-function getItems(res, locale, material, category, id, search) {
+var dataOrderly_1 = __importDefault(require("../../services/dataOrderly"));
+function getItems(res, locale, material, category, id, search, orderlyBy) {
     return __awaiter(this, void 0, void 0, function () {
+        var newData, i, data, dataSearched;
         return __generator(this, function (_a) {
-            http_1.default.get((0, options_1.default)(locale, id), function (result) {
-                var data = "";
-                result.on("data", function (chunk) {
-                    data += chunk;
-                });
-                result.on("end", function () {
-                    var newData = (0, dataFormatter_1.default)(JSON.parse(data), locale);
+            switch (_a.label) {
+                case 0:
+                    newData = [];
+                    i = 0;
+                    _a.label = 1;
+                case 1:
+                    if (!(i < locale.length)) return [3 /*break*/, 4];
+                    return [4 /*yield*/, getdata(locale[i], id)];
+                case 2:
+                    data = _a.sent();
+                    if (id) {
+                        newData = [data];
+                    }
+                    else {
+                        newData = __spreadArray(__spreadArray([], newData, true), data, true);
+                    }
+                    _a.label = 3;
+                case 3:
+                    i++;
+                    return [3 /*break*/, 1];
+                case 4:
+                    if (orderlyBy) {
+                        newData = (0, dataOrderly_1.default)({
+                            isSmaller: orderlyBy == "smaller",
+                            data: newData,
+                            price: true,
+                        });
+                    }
                     if (material || category) {
-                        return res
-                            .status(200)
-                            .json((0, dataFilter_1.default)(newData, material, category, search))
-                            .end();
+                        return [2 /*return*/, res
+                                .status(200)
+                                .json((0, dataFilter_1.default)(newData, material, category, search))
+                                .end()];
                     }
                     else {
                         if (search) {
-                            var dataSearched = (0, dataSearch_1.default)(newData, search);
+                            dataSearched = (0, dataSearch_1.default)(newData, search);
                             if (dataSearched.length === 0) {
-                                console.log(dataSearched);
-                                return res.status(401).end();
+                                return [2 /*return*/, res.status(404).end()];
                             }
-                            return res.status(200).json(dataSearched).end();
+                            return [2 /*return*/, res.status(200).json(dataSearched).end()];
                         }
                         else {
-                            return res.status(200).json(newData).end();
+                            return [2 /*return*/, res.status(200).json(newData).end()];
                         }
                     }
-                });
-            });
-            return [2 /*return*/];
+                    return [2 /*return*/];
+            }
         });
     });
 }
 exports.default = getItems;
+function getdata(locale, id) {
+    var _this = this;
+    return new Promise(function (resolve, rejecte) {
+        http_1.default.get((0, options_1.default)(locale, id), function (result) { return __awaiter(_this, void 0, void 0, function () {
+            var data;
+            return __generator(this, function (_a) {
+                data = "";
+                result.on("data", function (chunk) {
+                    data += chunk;
+                });
+                result.on("end", function () {
+                    resolve((0, dataFormatter_1.default)(JSON.parse(data), locale));
+                });
+                result.on("error", function (err) {
+                    rejecte(err);
+                });
+                return [2 /*return*/];
+            });
+        }); });
+    });
+}

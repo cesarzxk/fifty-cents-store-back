@@ -56,23 +56,25 @@ function getAccount(res, email, password) {
                     return [4 /*yield*/, account_1.default.findOne({ email: email })];
                 case 2:
                     user_1 = _b.sent();
-                    bcrypt_1.default.compare(password, user_1.password, function (err, result) {
-                        if (result) {
-                            return res
-                                .status(200)
-                                .json({
-                                _id: user_1._id,
-                                name: user_1.name,
-                                lastname: user_1.lastname,
-                                email: user_1.email,
-                                token: (0, generateToken_1.default)(user_1._id),
-                            })
-                                .end();
-                        }
-                        else {
-                            return res.status(401).end();
-                        }
-                    });
+                    if (user_1 && user_1.password) {
+                        bcrypt_1.default.compare(password, user_1.password, function (err, result) {
+                            if (result) {
+                                return res
+                                    .status(200)
+                                    .json({
+                                    _id: user_1._id,
+                                    name: user_1.name,
+                                    lastname: user_1.lastname,
+                                    email: user_1.email,
+                                    token: (0, generateToken_1.default)(user_1._id),
+                                })
+                                    .end();
+                            }
+                            else {
+                                return res.status(401).end();
+                            }
+                        });
+                    }
                     return [3 /*break*/, 4];
                 case 3:
                     _a = _b.sent();

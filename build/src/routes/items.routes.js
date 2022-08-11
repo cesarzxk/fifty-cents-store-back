@@ -8,11 +8,11 @@ var getItems_1 = __importDefault(require("../api/getItems"));
 var itemsRouter = (0, express_1.Router)();
 itemsRouter.get("/", function (request, response) {
     if (request.query.locale && request.query.id) {
-        (0, getItems_1.default)(response, request.query.locale, undefined, undefined, request.query.id, undefined);
+        (0, getItems_1.default)(response, request.query.locale, undefined, undefined, request.query.id, undefined, request.query.orderlyBy);
     }
     else {
         if (request.query.locale) {
-            (0, getItems_1.default)(response, request.query.locale, request.query.material, request.query.category, undefined, request.query.search);
+            (0, getItems_1.default)(response, request.query.locale, request.query.material, request.query.category, undefined, request.query.search, request.query.orderlyBy);
         }
         else {
             response.status(404).send("Erro! locale não especificado!").end();
