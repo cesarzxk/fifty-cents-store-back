@@ -9,6 +9,7 @@ async function getAccount(res: Response, email: string, password: string) {
   try {
     await main();
     const user = await accountModel.findOne({ email: email });
+    if(user && user.password){
     bcrypt.compare(password, user.password, (err, result) => {
       if (result) {
         return res
@@ -25,6 +26,7 @@ async function getAccount(res: Response, email: string, password: string) {
         return res.status(401).end();
       }
     });
+  }
   } catch {
     return res.status(401).end();
   }

@@ -54,9 +54,8 @@ export default async function getItems(
   } else {
     if (search) {
       const dataSearched = dataSearch(newData, search) as productType[] | [];
-
       if (dataSearched.length === 0) {
-        return res.status(401).end();
+        return res.status(404).end();
       }
       return res.status(200).json(dataSearched).end();
     } else {
