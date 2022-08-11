@@ -9,7 +9,7 @@
     "start": "node ./build/src/index.js"
   },
   "engines": {
-    "node": "6.11.1"
+    "node": "16.16.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
