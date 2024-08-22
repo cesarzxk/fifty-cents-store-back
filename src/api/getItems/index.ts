@@ -1,10 +1,10 @@
-import http from "http";
 import { Response } from "express";
 import dataFormatter from "../../services/dataFormatter";
 import options from "../options/";
 import dataFilter from "../../services/dataFilter";
 import dataSearch from "../../services/dataSearch";
 import dataOrderly from "../../services/dataOrderly";
+import axios from "axios";
 
 type productType = {
   hasDiscount: boolean;
@@ -31,6 +31,7 @@ export default async function getItems(
   let newData = [] as productType[];
   for (let i = 0; i < locale.length; i++) {
     const data = await getdata(locale[i], id);
+
     if (id) {
       newData = [data as productType];
     } else {
@@ -59,26 +60,17 @@ export default async function getItems(
       }
       return res.status(200).json(dataSearched).end();
     } else {
-      return res.status(200).json(newData).end();
+      return res
+        .status(200)
+        .json(id ? newData[0] : newData)
+        .end();
     }
   }
 }
 
-function getdata(locale: string, id: string | undefined) {
-  return new Promise((resolve, rejecte) => {
-    http.get(options(locale, id), async (result) => {
-      var data = "";
-      result.on("data", (chunk) => {
-        data += chunk;
-      });
+async function getdata(locale: string, id: string | undefined) {
+  const url = options(locale, id).host + options(locale, id).path;
+  const { data } = await axios.get(url);
 
-      result.on("end", () => {
-        resolve(dataFormatter(JSON.parse(data), locale) as productType[]);
-      });
-
-      result.on("error", (err) => {
-        rejecte(err);
-      });
-    });
-  });
+  return dataFormatter(data, locale);
 }
