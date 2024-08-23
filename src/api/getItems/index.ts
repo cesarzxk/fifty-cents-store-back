@@ -26,12 +26,15 @@ export default async function getItems(
   category?: string[],
   id?: string,
   search?: string,
-  orderlyBy?: "smaller" | "bigger" | undefined
+  orderlyBy?: "smaller" | "bigger" | undefined,
+  range?: number[]
 ) {
   let newData = [] as productType[];
-  for (let i = 0; i < locale.length; i++) {
-    const data = await getdata(locale[i], id);
+  let newTotal = [] as productType[];
 
+  for (let i = 0; i < locale.length; i++) {
+    const { data, total } = await getdata(locale[i], id, range);
+    newTotal = total;
     if (id) {
       newData = [data as productType];
     } else {
@@ -60,7 +63,10 @@ export default async function getItems(
       }
       return res.status(200).json(dataSearched).end();
     } else {
+      range && console.log(range[0], range[1]);
+
       return res
+        .header({ "Content-Range": id ? 1 : newTotal })
         .status(200)
         .json(id ? newData[0] : newData)
         .end();
@@ -68,9 +74,20 @@ export default async function getItems(
   }
 }
 
-async function getdata(locale: string, id: string | undefined) {
+async function getdata(
+  locale: string,
+  id: string | undefined,
+  range?: number[]
+) {
   const url = options(locale, id).host + options(locale, id).path;
-  const { data } = await axios.get(url);
+  const { data, headers } = await axios.get(url, {
+    params: range
+      ? {
+          _start: range[0],
+          _end: range[1] + 1,
+        }
+      : undefined,
+  });
 
-  return dataFormatter(data, locale);
+  return { data: dataFormatter(data, locale), total: headers["x-total-count"] };
 }

@@ -21,12 +21,15 @@ itemsRouter.get("/", (request: Request, response: Response) => {
     } else {
       getItems(
         response,
-        (request.query.locale as string[]) || ["brazilian", "european"],
+        (request.query.locale as string[]) || ["brazilian"],
         (request.query.material as string[]) || undefined,
         (request.query.category as string[]) || undefined,
         undefined,
         (request.query.search as string) || "",
-        request.query.orderlyBy as "smaller" | "bigger" | undefined
+        request.query.orderlyBy as "smaller" | "bigger" | undefined,
+        request.query.range
+          ? (JSON.parse(request.query.range as string) as unknown as number[])
+          : undefined
       );
     }
   } catch (e) {
